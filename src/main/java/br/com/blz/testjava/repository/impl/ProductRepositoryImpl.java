@@ -1,6 +1,7 @@
-package br.com.blz.testjava.repository;
+package br.com.blz.testjava.repository.impl;
 
 import br.com.blz.testjava.entity.Product;
+import br.com.blz.testjava.repository.ProductRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -8,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class MockRepository {
+public class ProductRepositoryImpl implements ProductRepository {
 
     private final List<Product> products;
 
-    private MockRepository() {
+    private ProductRepositoryImpl() {
         this.products = new ArrayList<>();
     }
 

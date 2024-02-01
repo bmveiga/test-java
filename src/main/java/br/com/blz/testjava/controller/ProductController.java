@@ -3,8 +3,8 @@ package br.com.blz.testjava.controller;
 import br.com.blz.testjava.dto.ProductDto;
 import br.com.blz.testjava.entity.Product;
 import br.com.blz.testjava.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,26 +18,26 @@ public class ProductController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<ProductDto> saveProduct(@RequestBody ProductDto productDto) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void saveProduct(@RequestBody @Valid ProductDto productDto) {
         productService.createProduct(productDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/find")
-    public ResponseEntity<Product> findProduct(@RequestParam Integer sku) {
-        Product product = productService.findProduct(sku);
-        return ResponseEntity.ok(product);
+    @ResponseStatus(HttpStatus.OK)
+    public Product findProduct(@RequestParam Integer sku) {
+        return productService.findProduct(sku);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Product> deleteProduct(@RequestParam Integer sku) {
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteProduct(@RequestParam Integer sku) {
         productService.deleteProduct(sku);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<Product> editProduct(@RequestParam Integer sku, @RequestBody ProductDto productDto) {
+    @ResponseStatus(HttpStatus.OK)
+    public void editProduct(@RequestParam Integer sku, @RequestBody ProductDto productDto) {
         productService.editProduct(sku, productDto);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

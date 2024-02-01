@@ -1,12 +1,10 @@
 package br.com.blz.testjava.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class NotFoundException extends RuntimeException{
+public class NotFoundException extends AbstractException{
 
-    public NotFoundException(String message) {
-        super(message);
+    public NotFoundException(String code, String message) {
+        super(code, message, HttpStatus.NOT_FOUND);
     }
 }

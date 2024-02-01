@@ -17,8 +17,8 @@ public class Product {
         return this.inventory.getQuantity() > 0;
     }
 
-    public void editProduct(ProductDto productDto) {
-        this.name = productDto.name();
-        this.inventory = productDto.inventory();
+    public void modify(ProductDto productDto) {
+        this.name = productDto.getName();
+        this.inventory = productDto.getInventory();
     }
 }
