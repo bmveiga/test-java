@@ -17,7 +17,10 @@ public class ProductService {
     }
 
     public void createProduct(ProductDto productDto) {
-        verifyIFProductExists(productDto.getSku());
+        productRepository.findById(productDto.getSku()).ifPresent(p -> {
+            throw new ProductAlreadyExistsException("4", productDto.getSku().toString());
+        });
+
         productRepository.save(productDto.convertToProduct());
     }
 
@@ -33,11 +36,5 @@ public class ProductService {
 
     public Product findProduct(Integer sku) {
         return productRepository.findById(sku).orElseThrow(() -> new NotFoundException("3", sku.toString()));
-    }
-
-    private void verifyIFProductExists(Integer sku) {
-        productRepository.findById(sku).ifPresent(p -> {
-            throw new ProductAlreadyExistsException("4", sku.toString());
-        });
     }
 }
