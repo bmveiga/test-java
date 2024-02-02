@@ -16,17 +16,23 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public void createProduct(ProductDto productDto) {
-        productRepository.findById(productDto.getSku()).ifPresent(p -> {
+    public Product createProduct(ProductDto productDto) {
+        productRepository.findById(productDto.getSku())
+            .ifPresent(p -> {
             throw new ProductAlreadyExistsException("4", productDto.getSku().toString());
         });
 
-        productRepository.save(productDto.convertToProduct());
+        Product product = productDto.convertToProduct();
+        productRepository.save(product);
+
+        return product;
     }
 
-    public void editProduct(Integer sku, ProductDto productDto) {
+    public Product editProduct(Integer sku, ProductDto productDto) {
         Product product = findProduct(sku);
         product.modify(productDto);
+
+        return product;
     }
 
     public void deleteProduct(Integer sku) {
@@ -35,6 +41,7 @@ public class ProductService {
     }
 
     public Product findProduct(Integer sku) {
-        return productRepository.findById(sku).orElseThrow(() -> new NotFoundException("3", sku.toString()));
+        return productRepository.findById(sku)
+            .orElseThrow(() -> new NotFoundException("3", sku.toString()));
     }
 }

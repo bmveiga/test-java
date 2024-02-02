@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("products")
+@RequestMapping
 public class ProductController {
 
     private final ProductService productService;
@@ -17,27 +17,27 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/save")
+    @PostMapping("/products")
     @ResponseStatus(HttpStatus.CREATED)
-    public void saveProduct(@RequestBody @Valid ProductDto productDto) {
-        productService.createProduct(productDto);
+    public Product createProduct(@RequestBody @Valid ProductDto productDto) {
+        return productService.createProduct(productDto);
     }
 
-    @GetMapping("/find")
+    @GetMapping("/products/{sku}")
     @ResponseStatus(HttpStatus.OK)
-    public Product findProduct(@RequestParam Integer sku) {
+    public Product findProduct(@PathVariable(name = "sku") Integer sku) {
         return productService.findProduct(sku);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/products/{sku}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteProduct(@RequestParam Integer sku) {
+    public void deleteProduct(@PathVariable(name = "sku") Integer sku) {
         productService.deleteProduct(sku);
     }
 
-    @PutMapping("/edit")
+    @PutMapping("/products/{sku}")
     @ResponseStatus(HttpStatus.OK)
-    public void editProduct(@RequestParam Integer sku, @RequestBody ProductDto productDto) {
-        productService.editProduct(sku, productDto);
+    public Product editProduct(@PathVariable(name = "sku") Integer sku, @RequestBody @Valid ProductDto productDto) {
+        return productService.editProduct(sku, productDto);
     }
 }

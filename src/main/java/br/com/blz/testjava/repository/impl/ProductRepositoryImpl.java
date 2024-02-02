@@ -22,13 +22,13 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     public Optional<Product> findById(Integer sku) {
-        return products.stream().filter(p -> sku.equals(p.getSku())).findFirst();
+        return products.stream()
+            .filter(p -> sku.equals(p.getSku()))
+            .findFirst();
     }
 
     public void delete(Product product) {
         products.remove(product);
     }
-
-
 
 }

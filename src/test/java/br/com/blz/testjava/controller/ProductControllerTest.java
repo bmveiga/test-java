@@ -27,7 +27,7 @@ class ProductControllerTest {
 
     @Test
     void shouldSaveProduct() {
-        productController.saveProduct(getProductDto());
+        productController.createProduct(getProductDto());
 
         verify(productService).createProduct(any(ProductDto.class));
     }
